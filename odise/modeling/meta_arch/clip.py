@@ -30,7 +30,7 @@ def build_clip_text_embed(clip_model_name, labels, device="cuda", verbose=True):
     if isinstance(clip_model_name, str):
         clip, _, _ = open_clip.create_model_and_transforms(
             model_name=clip_model_name,
-            pretrained="openai",
+            pretrained="laion400m_e31",
             device=device if torch.cuda.is_available() else "cpu",
         )
         if verbose:
@@ -39,6 +39,7 @@ def build_clip_text_embed(clip_model_name, labels, device="cuda", verbose=True):
         clip = clip_model_name
         if verbose:
             logger.info("Using provided CLIP model")
+
     clip_device = next(clip.parameters()).device
     if isinstance(labels, str):
         labels = [labels]
@@ -75,19 +76,19 @@ def build_clip_text_embed(clip_model_name, labels, device="cuda", verbose=True):
 
 # Modified from https://github.com/lucidrains/DALLE2-pytorch/blob/350a3d60456693a8ecdccc820e97dbb6b0c81866/dalle2_pytorch/dalle2_pytorch.py#L238 # noqa
 class ClipAdapter(nn.Module):
-    def __init__(self, name="ViT-B-32", normalize=True):
+    def __init__(self, name="ViT-B-16", normalize=True):
 
         # download on local rank 0 first
         if comm.get_local_rank() == 0:
-            open_clip.create_model_and_transforms(name, pretrained="openai")
+            open_clip.create_model_and_transforms(name, pretrained="laion400m_e31")
         comm.synchronize()
 
         # checked, the same as openai original CLIP
-        openai_clip, _, preprocess = open_clip.create_model_and_transforms(
-            name, pretrained="openai"
+        clip, _, preprocess = open_clip.create_model_and_transforms(
+            name, pretrained="laion400m_e31"
         )
         super().__init__()
-        self.clip = openai_clip
+        self.clip = clip
 
         # self.clip_normalize = preprocess.transforms[-1]
         # the first two are Resize and Crop, the last one is normalization
@@ -241,7 +242,8 @@ class MaskCLIP(ClipAdapter):
     Ref: https://arxiv.org/abs/2208.08984
     """
 
-    def __init__(self, name="ViT-L-14-336"):
+    # def __init__(self, name="ViT-L-14-336"):
+    def __init__(self, name="ViT-B-16"):
         super().__init__(name=name, normalize=False)
 
     @property

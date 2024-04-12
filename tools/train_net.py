@@ -50,10 +50,16 @@ from odise.engine.train_loop import AMPTrainer, SimpleTrainer
 from odise.evaluation import inference_on_dataset
 from odise.utils.events import CommonMetricPrinter, WandbWriter, WriterStack
 
+import os
+# train2017에 000000252219.jpg, 000000037777.jpg 관련 이슈 생길 수 있음
+# export DETECTRON2_DATASETS="/shared/s2/lab01/hyun/DETECTRON2_DATASETS"
+os.environ["DETECTRON2_DATASETS"]="/shared/s2/lab01/hyun/DETECTRON2_DATASETS"
+
+
+
 PathManager.register_handler(S3PathHandler())
 
 logger = logging.getLogger("odise")
-
 
 def default_writers(cfg):
     """

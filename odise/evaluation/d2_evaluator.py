@@ -36,7 +36,7 @@ class COCOEvaluator(_COCOEvaluator):
         Args:
             img_ids: a list of image IDs to evaluate on. Default to None for the whole dataset
         """
-
+        print(img_ids)
         results = super().evaluate(img_ids)
         prefix_results = OrderedDict()
         for k, v in results.items():

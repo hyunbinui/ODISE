@@ -51,6 +51,7 @@ def register_all_coco_panoptic_annos_sem_seg_caption(root):
         else:
             raise ValueError("Unknown prefix: {}".format(prefix))
         instances_meta = MetadataCatalog.get(prefix_instances)
+        # print(instances_meta)
         image_root, instances_json = instances_meta.image_root, instances_meta.json_file
 
         register_coco_panoptic_annos_sem_seg(

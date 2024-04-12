@@ -1019,7 +1019,8 @@ class WordEmbed(nn.Module):
     def __init__(
         self,
         projection_dim,
-        clip_model_name="ViT-L-14",
+        # clip_model_name="ViT-L-14",
+        clip_model_name="ViT-B-16",
         word_dropout=0.0,
         word_tags="noun_phrase",
         num_words=8,
@@ -1221,7 +1222,8 @@ class CategoryEmbed(nn.Module):
         self,
         labels,
         projection_dim,
-        clip_model_name="ViT-L-14",
+        # clip_model_name="ViT-L-14",
+        clip_model_name="ViT-B-16",
         prompt=None,
     ):
         super().__init__()
@@ -1313,7 +1315,8 @@ class CLIPOpenClassEmbed(nn.Module):
         labels,
         hidden_dim,
         projection_modality="text",
-        clip_model_name="ViT-L-14",
+        # clip_model_name="ViT-L-14",
+        clip_model_name="ViT-B-16",
         with_null_embed=True,
         temperature=0.07,
         ensemble_method="max",
@@ -1422,7 +1425,8 @@ class CLIPOpenClassEmbed(nn.Module):
 class PoolingCLIPHead(WordEmbed):
     def __init__(
         self,
-        clip_model_name="ViT-L-14-336",
+        # clip_model_name="ViT-L-14-336",
+        clip_model_name="ViT-B-16",
         alpha=0.35,
         beta=0.65,
         prompt="photo",

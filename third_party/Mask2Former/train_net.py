@@ -4,6 +4,9 @@ MaskFormer Training Script.
 
 This script is a simplified version of the training script in detectron2/tools.
 """
+
+# export DETECTRON2_DATASETS="/shared/s2/lab01/dataset/zeroseg/"
+
 try:
     # ignore ShapelyDeprecationWarning from fvcore
     from shapely.errors import ShapelyDeprecationWarning
@@ -57,7 +60,6 @@ from mask2former import (
     SemanticSegmentorWithTTA,
     add_maskformer2_config,
 )
-
 
 class Trainer(DefaultTrainer):
     """

@@ -82,7 +82,8 @@ model = L(CategoryODISE)(
         importance_sample_ratio=0.75,
     ),
     category_head=L(CategoryEmbed)(
-        clip_model_name="ViT-L-14-336",
+        # clip_model_name="ViT-L-14-336",
+        clip_model_name="ViT-B-16",
         labels=L(get_openseg_labels)(dataset="coco_panoptic", prompt_engineered=True),
         projection_dim="${..sem_seg_head.transformer_predictor.post_mask_embed.projection_dim}",
     ),

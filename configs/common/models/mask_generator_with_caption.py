@@ -81,7 +81,8 @@ model = L(CaptionODISE)(
     ),
     grounding_criterion=L(MaskGroundingCriterion)(collect_mode="diff"),
     word_head=L(WordEmbed)(
-        clip_model_name="ViT-L-14-336",
+        # clip_model_name="ViT-L-14-336",
+        clip_model_name="ViT-B-16",
         projection_dim="${model.sem_seg_head.transformer_predictor.post_mask_embed.projection_dim}",
         word_tags="noun_phrase",
         word_dropout=0.0,

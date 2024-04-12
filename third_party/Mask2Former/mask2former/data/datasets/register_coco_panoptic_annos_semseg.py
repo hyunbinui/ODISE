@@ -87,7 +87,6 @@ def load_coco_panoptic_json(json_file, image_dir, gt_dir, semseg_dir, meta):
         list[dict]: a list of dicts in Detectron2 standard format. (See
         `Using Custom Datasets </tutorials/datasets.html>`_ )
     """
-
     def _convert_category_id(segment_info, meta):
         if segment_info["category_id"] in meta["thing_dataset_id_to_contiguous_id"]:
             segment_info["category_id"] = meta["thing_dataset_id_to_contiguous_id"][
@@ -100,7 +99,7 @@ def load_coco_panoptic_json(json_file, image_dir, gt_dir, semseg_dir, meta):
             ]
             segment_info["isthing"] = False
         return segment_info
-
+    
     with PathManager.open(json_file) as f:
         json_info = json.load(f)
 
@@ -150,6 +149,7 @@ def register_coco_panoptic_annos_sem_seg(
 
     # the name is "coco_2017_train_panoptic_with_sem_seg" and "coco_2017_val_panoptic_with_sem_seg"
     semantic_name = name + "_with_sem_seg"
+    #!*
     DatasetCatalog.register(
         semantic_name,
         lambda: load_coco_panoptic_json(panoptic_json, image_root, panoptic_root, sem_seg_root, metadata),
