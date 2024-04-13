@@ -30,7 +30,8 @@ def build_clip_text_embed(clip_model_name, labels, device="cuda", verbose=True):
     if isinstance(clip_model_name, str):
         clip, _, _ = open_clip.create_model_and_transforms(
             model_name=clip_model_name,
-            pretrained="laion400m_e31",
+            # pretrained="laion400m_e31",
+            pretrained="openai",
             device=device if torch.cuda.is_available() else "cpu",
         )
         if verbose:
@@ -80,12 +81,14 @@ class ClipAdapter(nn.Module):
 
         # download on local rank 0 first
         if comm.get_local_rank() == 0:
-            open_clip.create_model_and_transforms(name, pretrained="laion400m_e31")
+            # open_clip.create_model_and_transforms(name, pretrained="laion400m_e31")
+            open_clip.create_model_and_transforms(name, pretrained="openai")
         comm.synchronize()
 
         # checked, the same as openai original CLIP
         clip, _, preprocess = open_clip.create_model_and_transforms(
-            name, pretrained="laion400m_e31"
+            # name, pretrained="laion400m_e31"
+            name, pretrained="openai"
         )
         super().__init__()
         self.clip = clip
